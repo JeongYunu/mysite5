@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- 전체리스트 -->
+	<select id="boardList" parameterType="string" resultType="BoardVo">
+		<![CDATA[
+			select  b.no,
+			        b.title,
+			        b.hit,
+			        b.reg_date regDate,
+			        b.user_no userNo,
+			        u.name
+			from board b, users u
+			where b.user_no = u.no
+		]]>
+		<if test=" value != null and value !='' ">
+			and b.title like '%'|| #{ keyword } ||'%'
+		</if>	
+		<![CDATA[
+			order by regDate desc
+		]]>
+
+	</select>
+
+	<!-- 글쓰 -->
+	<insert id="boardInsert" parameterType="BoardVo">
+		<![CDATA[
+			insert into board
+			values(seq_board_no.nextval, #{ title }, #{ content }, #{ hit }, sysdate, #{ userNo })
+		]]>
+
+	</insert>
+
+
+
+	<!-- 조회수 올리 -->
+	<update id="updateHit" parameterType="int">
+		<![CDATA[
+			update board
+			set hit = hit+1
+			where no = #{ no }
+	    ]]>
+	</update>
+
+	<!-- 게시판 1개 정보 가져오 -->
+	<select id="selectBoard" parameterType="int" resultType="BoardVo">
+		<![CDATA[
+			select b.no,
+			       b.title,
+			       b.content,
+			       b.hit,
+			       to_char(b.reg_date, 'yyyy-mm-dd') regDate,
+			       b.user_no userNo,
+			       u.name
+			from board b, users u
+			where b.user_no = u.no
+			and b.no = #{ no }
+		]]>
+	</select>
+
+
+</mapper>
