@@ -65,7 +65,7 @@
 										<td>${ vo.hit }</td>
 										<td>${ vo.regDate }</td>
 										<c:if test="${ authUser.no eq vo.userNo }">
-											<td><a href="/mysite/board?action=delete&no=${ vo.no }">[삭제]</a></td>
+											<td><a href="${ pageContext.request.contextPath }/board/delete?no=${ vo.no }">[삭제]</a></td>
 										</c:if>
 									</tr>
 								</c:forEach>

@@ -68,8 +68,9 @@
 							<div id="txt-content">
 								<span class="form-value">${ boardVo.content }<br> </span>
 							</div>
-
-							<a id="btn_modify" href="">수정</a> 
+							<c:if test="${ authUser.no eq boardVo.userNo }">
+								<a id="btn_modify" href="${ pageContext.request.contextPath }/board/modifyForm?no=${ boardVo.no }">수정</a> 
+							</c:if>
 							<a id="btn_modify" href="${ pageContext.request.contextPath }/board/list">목록</a>
 
 						</form>

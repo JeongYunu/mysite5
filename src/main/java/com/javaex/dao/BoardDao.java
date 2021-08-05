@@ -42,6 +42,20 @@ public class BoardDao {
 		return sqlSession.selectOne("board.selectBoard", no);
 	}
 	
+	//수정
+	public int updateBoard(BoardVo boardVo) {
+		System.out.println("[BoardDao.updateBoard]");
+		
+		return sqlSession.update("board.updateBoard", boardVo);
+	}
+	
+	//삭제
+	public int delete(int no) {
+		System.out.println("[BoardDao.delete");
+		
+		return sqlSession.delete("board.delete", no);
+	}
+	
 	
 	
 	

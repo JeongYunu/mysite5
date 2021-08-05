@@ -9,17 +9,17 @@
 			select  b.no,
 			        b.title,
 			        b.hit,
-			        b.reg_date regDate,
+			        to_char(b.reg_date, 'yyyy-mm-dd') regDate,
 			        b.user_no userNo,
 			        u.name
 			from board b, users u
 			where b.user_no = u.no
 		]]>
-		<if test=" value != null and value !='' ">
+		<if test=" _parameter != null and _parameter !='' ">
 			and b.title like '%'|| #{ keyword } ||'%'
 		</if>	
 		<![CDATA[
-			order by regDate desc
+			order by no desc
 		]]>
 
 	</select>
@@ -32,8 +32,6 @@
 		]]>
 
 	</insert>
-
-
 
 	<!-- 조회수 올리 -->
 	<update id="updateHit" parameterType="int">
@@ -59,6 +57,32 @@
 			and b.no = #{ no }
 		]]>
 	</select>
+
+	<!-- 게시판 수정 -->
+	<update id="updateBoard" parameterType="boardVo">
+		<![CDATA[
+			update board
+			set		title = #{ title },
+			        content = #{ content }
+			where no = #{ no }
+		]]>
+	</update>
+
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="int">
+		<![CDATA[
+			delete from board
+			where no = #{ no }   
+		]]>
+	</delete>
+
+
+
+
+
+
+
+
 
 
 </mapper>

@@ -41,4 +41,43 @@ public class BoardService {
 		
 		return boardVo;
 	}
+	
+	//수정
+	public BoardVo getBoardInfo(int no) {
+		System.out.println("[BoardService.getBoardInfo]");
+
+		//게시판 정보 가져오기
+		BoardVo boardVo = boardDao.selectBoard(no);
+		
+		return boardVo;
+	}
+	
+	//수정
+	public int updateBoard(BoardVo boardVo) {
+		System.out.println("[BoardService.updateBoard]");
+		int count = boardDao.updateBoard(boardVo);
+		
+		return count;
+	}
+	
+	//삭제
+	public int delete(int no) {
+		System.out.println("[BoardService.delete]");
+		int count = boardDao.delete(no);
+		
+		return count;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

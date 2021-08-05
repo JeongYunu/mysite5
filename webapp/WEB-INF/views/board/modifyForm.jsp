@@ -9,9 +9,7 @@
 <title>Insert title here</title>
 <link href="${ pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
-
 </head>
-
 
 <body>
 	<div id="wrap">
@@ -40,31 +38,49 @@
 				<!-- //content-head -->
 
 				<div id="board">
-					<div id="writeForm">
-						<form action="${ pageContext.request.contextPath }/board/write" method="get">
+					<div id="modifyForm">
+						<form action="${ pageContext.request.contextPath }/board/modify" method="get">
+							<!-- 작성자 -->
+							<div class="form-group">
+								<span class="form-text">작성자</span> 
+								<span class="form-value">${ boardVo.no }</span>
+							</div>
+
+							<!-- 조회수 -->
+							<div class="form-group">
+								<span class="form-text">조회수</span> 
+								<span class="form-value">${ boardVo.name }</span>
+							</div>
+
+							<!-- 작성일 -->
+							<div class="form-group">
+								<span class="form-text">작성일</span> 
+								<span class="form-value">${ boardVo.regDate }</span>
+							</div>
+
 							<!-- 제목 -->
 							<div class="form-group">
 								<label class="form-text" for="txt-title">제목</label> 
-								<input type="text" id="txt-title" name="title" value="" placeholder="제목을 입력해 주세요">
+								<input type="text" id="txt-title" name="title" value="${ boardVo.title }">
 							</div>
 
 							<!-- 내용 -->
 							<div class="form-group">
-								<textarea id="txt-content" name="content" value=""></textarea>
+								<textarea id="txt-content" name="content" value="">${ boardVo.content }</textarea>
 							</div>
 
 							<a id="btn_cancel" href="${ pageContext.request.contextPath }/board/list">취소</a>
-							<button id="btn_add" type="submit">등록</button>
+							<button id="btn_modify" type="submit">수정</button>
+							<input type="hidden" name="no" value="${ boardVo.no }">
 
 						</form>
 						<!-- //form -->
 					</div>
-					<!-- //writeForm -->
+					<!-- //modifyForm -->
 				</div>
 				<!-- //board -->
 			</div>
 			<!-- //content  -->
-
 
 		</div>
 		<!-- //container  -->
@@ -77,5 +93,3 @@
 </body>
 
 </html>
-
-

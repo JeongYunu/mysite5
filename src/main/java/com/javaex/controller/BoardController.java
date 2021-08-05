@@ -28,7 +28,6 @@ public class BoardController {
 			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
 		System.out.println("[BoardController.list]");
 		List<BoardVo> boardList = boardService.boardList(keyword);
-
 		model.addAttribute("boardList", boardList);
 
 		return "board/list";
@@ -62,4 +61,45 @@ public class BoardController {
 		
 		return "board/read";
 	}
+	
+	//수정폼
+	@RequestMapping(value = "/board/modifyForm", method = {RequestMethod.GET, RequestMethod.POST})
+	public String modifyForm(@RequestParam("no") int no, Model model) {
+		System.out.println("[BoardController.modifyForm]");
+	    BoardVo boardVo = boardService.getBoardInfo(no);
+		model.addAttribute("boardVo", boardVo);
+		
+		return "board/modifyForm";
+	}
+	
+	//수정
+	@RequestMapping(value = "/board/modify", method = {RequestMethod.GET, RequestMethod.POST})
+	public String modify(@ModelAttribute BoardVo boardVo) {
+		System.out.println("[BoardController.modify]");
+		boardService.updateBoard(boardVo);
+		
+		return "redirect:/board/read?no=" + boardVo.getNo();
+	}
+	
+	//삭제
+	@RequestMapping(value = "/board/delete", method = {RequestMethod.GET, RequestMethod.POST})
+	public String delete(@RequestParam("no") int no) {
+		System.out.println("[BoardController.delete");
+		boardService.delete(no);
+		
+		
+		return "redirect:/board/list";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
