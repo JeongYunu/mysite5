@@ -4,7 +4,7 @@
 <mapper namespace="board">
 
 	<!-- 전체리스트 -->
-	<select id="boardList" parameterType="string" resultType="BoardVo">
+	<select id="boardList" parameterType="String" resultType="BoardVo">
 		<![CDATA[
 			select  b.no,
 			        b.title,
@@ -16,8 +16,9 @@
 			where b.user_no = u.no
 		]]>
 		<if test=" _parameter != null and _parameter !='' ">
-			and b.title like '%'|| #{ keyword } ||'%'
-		</if>	
+			and b.title like '%'|| #{keyword} ||'%'
+		</if>  
+		
 		<![CDATA[
 			order by no desc
 		]]>
@@ -65,6 +66,7 @@
 			set		title = #{ title },
 			        content = #{ content }
 			where no = #{ no }
+			and user_no = #{ userNo }
 		]]>
 	</update>
 
@@ -77,12 +79,14 @@
 	</delete>
 
 
-
-
-
-
-
-
-
-
 </mapper>
+
+
+
+
+
+
+
+
+
+

@@ -35,8 +35,13 @@ public class BoardController {
 	
 	//글쓰기폼
 	@RequestMapping(value = "/board/writeForm", method = {RequestMethod.GET, RequestMethod.POST})
-	public String writeForm() {
+	public String writeForm(HttpSession session) {
 		System.out.println("[BoardController.writeForm]");
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		//로그인 안한경우 --> 메인
+	    if(authUser == null) {
+	    	return "redirect:/user/loginForm";
+	    }
 		
 		return "board/writeForm";
 	}
@@ -56,7 +61,8 @@ public class BoardController {
 	@RequestMapping(value = "/board/read", method = {RequestMethod.GET, RequestMethod.POST})
 	public String read(@RequestParam("no") int no, Model model) {
 		System.out.println("[BoardController.read]");
-		BoardVo boardVo = boardService.getBoard(no);
+		String mode = "read";
+		BoardVo boardVo = boardService.getBoard(no, mode);
 		model.addAttribute("boardVo", boardVo);
 		
 		return "board/read";
@@ -64,18 +70,33 @@ public class BoardController {
 	
 	//수정폼
 	@RequestMapping(value = "/board/modifyForm", method = {RequestMethod.GET, RequestMethod.POST})
-	public String modifyForm(@RequestParam("no") int no, Model model) {
+	public String modifyForm(@RequestParam("no") int no, Model model, HttpSession session) {
 		System.out.println("[BoardController.modifyForm]");
-	    BoardVo boardVo = boardService.getBoardInfo(no);
-		model.addAttribute("boardVo", boardVo);
-		
-		return "board/modifyForm";
+		String mode = "modify";
+	    BoardVo boardVo = boardService.getBoard(no, mode);
+	    UserVo authUser = (UserVo)session.getAttribute("authUser");
+	    
+	    //로그인 안한경우 --> 메인
+	    if(authUser == null) {
+	    	return "redirect:/main";
+	    }
+	    
+	    //로그인사용자 == 글작성자
+	    if(authUser.getNo() == boardVo.getUserNo()) { 
+	    	model.addAttribute("boardVo", boardVo);
+	    	return "board/modifyForm";
+	    }else { //본인글 아닌경우
+	    	return "redirect:/main";
+	    }
+	    
 	}
 	
 	//수정
 	@RequestMapping(value = "/board/modify", method = {RequestMethod.GET, RequestMethod.POST})
-	public String modify(@ModelAttribute BoardVo boardVo) {
+	public String modify(@ModelAttribute BoardVo boardVo, HttpSession session) {
 		System.out.println("[BoardController.modify]");
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		boardVo.setUserNo(authUser.getNo());
 		boardService.updateBoard(boardVo);
 		
 		return "redirect:/board/read?no=" + boardVo.getNo();
@@ -86,7 +107,6 @@ public class BoardController {
 	public String delete(@RequestParam("no") int no) {
 		System.out.println("[BoardController.delete");
 		boardService.delete(no);
-		
 		
 		return "redirect:/board/list";
 	}

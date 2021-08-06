@@ -17,7 +17,7 @@ public class BoardDao {
 	//전체리스트
 	public List<BoardVo> boardList(String keyword) {
 		System.out.println("[BoardDao.boardList]");
-		
+
 		return sqlSession.selectList("board.boardList", keyword);
 	}
 	

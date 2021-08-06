@@ -31,18 +31,26 @@ public class BoardService {
 	
 	
 	//read
-	public BoardVo getBoard(int no) {
+	public BoardVo getBoard(int no, String mode) {
 		System.out.println("[BoardService.getBoard]");
-		//조회수 올리기
-		boardDao.updateHit(no);
-		
-		//게시판 정보 가져오기
-		BoardVo boardVo = boardDao.selectBoard(no);
+		BoardVo boardVo = null;
+		if("read".equals(mode)) {
+			System.out.println("read");
+			//조회수 올리기
+			boardDao.updateHit(no);
+			//읽기 게시판 정보 가져오기
+			boardVo = boardDao.selectBoard(no);
+		}else if("modify".equals(mode)) {
+			System.out.println("modify");
+			//수정폼 계시판 정보가져오
+			boardVo = boardDao.selectBoard(no);
+		}
 		
 		return boardVo;
 	}
 	
-	//수정
+	/*
+	//수정폼
 	public BoardVo getBoardInfo(int no) {
 		System.out.println("[BoardService.getBoardInfo]");
 
@@ -51,6 +59,7 @@ public class BoardService {
 		
 		return boardVo;
 	}
+	*/
 	
 	//수정
 	public int updateBoard(BoardVo boardVo) {
