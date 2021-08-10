@@ -28,9 +28,31 @@
 		]]>
 	</delete>
 
+	<!-- 방명록 글 저장 키값 저장 -->
+	<insert id="insertGuestbookKey" parameterType="GuestbookVo">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		<![CDATA[
+			select seq_guestbook_id.nextval from dual
+		]]>
+		</selectKey>
+		<![CDATA[
+			insert into guestbook
+			values(#{no}, #{name}, #{password}, #{content}, sysdate)
+		]]>
+	</insert>
 
-
-
+	<!-- 방명록 글 1개 자겨오기 -ajax -->
+	<select id="selectGuestbook" parameterType="int" resultType="GuestbookVo">
+		<![CDATA[
+			select  no,
+					name,
+					password,
+					content,
+					to_char(reg_date, 'yyyy-mm-dd hh:mi:ss') regDate
+			from guestbook
+			where no = #{ no }
+		]]>
+	</select>
 
 
 

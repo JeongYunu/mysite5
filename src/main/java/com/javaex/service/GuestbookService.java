@@ -31,13 +31,25 @@ public class GuestbookService {
 	
 	//삭제
 	public int delete(GuestbookVo gBookVo) {
-		System.out.println("[gBookService.delete");
+		System.out.println("[gBookService.delete]");
 		int count = gBookDao.delete(gBookVo);
 		
 		return count;
 	}
 	
-	
+	//방명록 글 저장 --> 게시글 가져오기
+	public GuestbookVo writeResultVo(GuestbookVo gBookVo) {
+		System.out.println("[gBookService.writeResultVo]");
+		//글저장
+		int count = gBookDao.inserGuestbookKey(gBookVo);
+		
+		int no = gBookVo.getNo();	//방금 저장한 글 번호
+		
+		//글가져오기(방금등록한 번호)
+		GuestbookVo resultVo = gBookDao.selectGuestbook(no);
+		
+		return resultVo;
+	}
 	
 	
 	
