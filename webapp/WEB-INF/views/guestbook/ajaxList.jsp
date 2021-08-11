@@ -45,7 +45,7 @@
 				<!-- //content-head -->
 
 				<div id="guestbook">
-					<form id="form-reset" action="" method="">
+					<div>
 						<table id="guestAdd">
 							<colgroup>
 								<col style="width: 70px;">
@@ -73,7 +73,7 @@
 						</table>
 						<!-- //guestWrite -->
 
-					</form>
+					</div>
 
 					<!-- 리스트 그려지는 영역 -->
 					<div id="listArea">
@@ -184,18 +184,19 @@
 				/*성공시 처리해야될 코드 작성*/
 				render(resultVo, "up");
 
-				/* 
+				
 				$("#input-uname").val("");
 				$("#input-pass").val("");
 				$("[name = 'content']").val("");
-				 */
-
+				 
+				/*
 				//특정폼 하나만 리셋
 				$("#form-reset")[0].reset();
 				//문서내에 모든폼 리셋
 				$('form').each(function() {
 					this.reset();
 				});
+				*/
 
 			},
 			error : function(XHR, status, error) {
