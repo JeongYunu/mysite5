@@ -1,6 +1,8 @@
 package com.javaex.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,27 @@ public class BoardDao {
 
 	@Autowired
 	private SqlSession sqlSession;
+	
+	//전체 게시물 갯수 구하기
+	public int selectTotalCnt(String keyword) {
+		System.out.println("[BoardDao.selectTotalCnt]");
+		
+		return sqlSession.selectOne("board.selectTotalCnt", keyword); 
+	}
+	
+	//게시판 페이징 연습용 리스트
+	public List<BoardVo> boardList2(int startRnum, int endRnum, String keyword){
+		System.out.println("[BoardDao.boarList]");
+		//System.out.println(startRnum + "~" + endRnum);
+		
+		Map<String, Object> pagingMap = new HashMap<>();
+		pagingMap.put("startRnum", startRnum);
+		pagingMap.put("endRnum", endRnum);
+		pagingMap.put("keyword", keyword);
+		System.out.println(pagingMap);
+		
+		return sqlSession.selectList("board.boardList2", pagingMap);
+	}
 	
 	//전체리스트
 	public List<BoardVo> boardList(String keyword) {

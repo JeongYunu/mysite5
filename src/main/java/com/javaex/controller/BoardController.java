@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +22,20 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	//게시판 페이징 연습용 리스트
+	@RequestMapping(value="/board/list2", method = { RequestMethod.GET, RequestMethod.POST })
+	public String list2(Model model, 
+			@RequestParam(value = "crtPage", required = false, defaultValue = "1") int crtPage,
+			@RequestParam(value = "keyword", required = false, defaultValue = "") String keyword) {
+		
+		System.out.println("[BoardController.list2]");
+		Map<String, Object> listMap = boardService.boardList2(crtPage, keyword);
+		//System.out.println(listMap);
+		model.addAttribute("listMap", listMap);
+		
+		return "board/list2";
+	}
 	
 	//전체리스트
 	@RequestMapping(value = "/board/list", method = { RequestMethod.GET, RequestMethod.POST })

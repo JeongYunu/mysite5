@@ -223,7 +223,8 @@
 				//본인글 검증
 				if(imgInfo.userNo != authUserNo){
 					//삭제버튼 remove
-					$("#btnDel").remove();
+					//$("#btnDel").remove();
+					$("#btnDel").hide();
 				}
 				
 			},

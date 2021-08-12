@@ -20,6 +20,20 @@ public class UserService {
 		return authUser;
 	}
 	
+	//idCheck
+	public boolean getUser(String id) {
+		System.out.println("[UserService.getUser()]");
+		
+		UserVo userVo = userDao.selectUser(id);
+		
+		if(userVo == null) {// 아이디 조회 결과가 없으면 사용가능
+			return true;
+		}else { // 아이디 조회 결과가 있으면 사용가능
+			return false;
+		}
+		
+	}
+	
 	//insertUser
 	public int insertUser(UserVo userVo) {
 		System.out.println("[UserService.userInsert]");

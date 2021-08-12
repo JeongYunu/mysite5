@@ -18,6 +18,12 @@ public class UserDao {
 		return sqlSession.selectOne("user.selectUser", userVo);
 	}
 	
+	public UserVo selectUser(String id) {
+		System.out.println("[UserDao.selectUser]");
+		
+		return sqlSession.selectOne("user.idCheck", id);
+	}
+	
 	//insertUser
 	public int insertUser(UserVo userVo) {
 		System.out.println("[UserDao.insertUser]");

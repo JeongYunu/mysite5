@@ -44,6 +44,14 @@
 	    ]]>
 	</update>
 	
+	<select id="idCheck" parameterType="String" resultType="UserVo">
+		<![CDATA[    
+			select id
+			from users
+			where id = #{ id }
+		]]>
+	</select>
+	
 	
 	
 </mapper>

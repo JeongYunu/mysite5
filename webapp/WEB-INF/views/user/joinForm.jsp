@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 <link href="${ pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${ pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
-
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
 </head>
 
 <body>
@@ -46,7 +46,8 @@
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
 								<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
-								<button type="button" id="">중복체크</button>
+								<button type="button" id="btnIdCheck">중복체크</button>
+								<p id="idcheckMsg"></p>
 							</div>
 
 							<!-- 비밀번호 -->
@@ -99,5 +100,47 @@
 	<!-- //wrap -->
 
 </body>
+
+	<script type="text/javascript">
+
+	//아이디체크 버튼 클릭할때
+	$("#btnIdCheck").on("click", function(){
+		console.log("아이디체크 버튼 클릭");
+		
+		var id = $("#input-uid").val();
+		
+		//데이터 ajax방식으로 서버에 전송
+		$.ajax({
+			url : "${pageContext.request.contextPath }/user/idcheck" ,
+			type : "post",
+			//contentType : "application/json",
+			data : {id: id},
+			
+			dataType : "json",
+			success : function(state){
+				/*성공시 처리해야될 코드 작성*/
+				console.log(state);
+				
+				if(state == true){
+					$("#idcheckMsg").html("사용가능한 id입니다");	
+				}else if(state == false){
+					$("#idcheckMsg").html("사용중인 id 입니다. 다른 id를 사용해 주세요");	
+				}else {
+					$("#idcheckMsg").html("관리자에게 문의");
+				}
+				
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+		
+		
+		
+	});
+
+	</script>
 
 </html>
